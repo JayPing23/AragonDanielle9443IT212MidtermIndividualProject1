@@ -38,13 +38,13 @@ public class PolynomialArithmetic {
                     addPolynomials();
                     break;
                 case 3:
-                    System.out.println("to do...");
+                    subtractPolynomials();
                     break;
                 case 4:
-                    System.out.println("to do...");
+                    multiplyPolynomials();
                     break;
                 case 5:
-                    System.out.println("to do...");
+                    dividePolynomials();
                     break;
                 case 6:
                     System.out.println("Thank you for using this program.");
@@ -140,11 +140,6 @@ public class PolynomialArithmetic {
         return value;
     }
 
-    /**
-     * Reads a polynomial from user input.
-     * @return The user's input polynomial.
-     * @throws Exception if an error occurs.
-     */
     public Polynomial readPolynomial() throws Exception {
         Polynomial p = new Polynomial();
         int degree = -1;
@@ -154,7 +149,12 @@ public class PolynomialArithmetic {
         System.out.println("The polynomial should involve one variable/literal only.");
         do {
             System.out.print("What is the literal coefficient of the polynomial in one variable? ");
-            literalCoefficient = keyboard.nextLine().charAt(0);
+            String input = keyboard.nextLine().trim();
+            if (input.length() == 1 && Character.isAlphabetic(input.charAt(0))) {
+                literalCoefficient = input.charAt(0);
+            } else {
+                System.out.println("Invalid input. Please enter a single alphabetic character.");
+            }
         } while (!Character.isAlphabetic(literalCoefficient));
 
         do {
@@ -169,6 +169,7 @@ public class PolynomialArithmetic {
         }
         return p;
     }
+
 
     /**
      * Reads a term of a polynomial.
@@ -203,6 +204,77 @@ public class PolynomialArithmetic {
             System.out.println("Sum of the polynomials : " + p1.add(p2));
         } else {
             System.out.println("The two polynomials cannot be added because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Subtracts two polynomials and prints the result.
+     * @throws Exception if an error occurs.
+     */
+    public void subtractPolynomials() throws Exception {
+        System.out.println("You want to subtract one polynomial from another.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second polynomial should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Result of subtraction : " + p1.subtract(p2));
+        } else {
+            System.out.println("The two polynomials cannot be subtracted because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Multiplies two polynomials and prints the result.
+     * @throws Exception if an error occurs.
+     */
+    public void multiplyPolynomials() throws Exception {
+        System.out.println("You want to multiply two polynomials.");
+        System.out.println("Enter the first polynomial.");
+        Polynomial p1 = readPolynomial();
+        System.out.println("Enter the second polynomial.");
+        System.out.println("Note that the second polynomial should have the same variable/literal as the first polynomial.");
+        Polynomial p2 = readPolynomial();
+        System.out.println("First polynomial : " + p1.toString());
+        System.out.println("Second polynomial : " + p2.toString());
+
+        if (p1.getTerms().get(0).getLiteral() == p2.getTerms().get(0).getLiteral()) {
+            System.out.println("Result of multiplication : " + p1.multiply(p2));
+        } else {
+            System.out.println("The two polynomials cannot be multiplied because they have different literals.");
+        }
+        System.out.println("Press enter to continue.....");
+        keyboard.nextLine();
+    }
+
+    /**
+     * Divides two polynomials and prints the result.
+     * @throws Exception if an error occurs.
+     */
+    public void dividePolynomials() throws Exception {
+        System.out.println("You want to divide one polynomial by another.");
+        System.out.println("Enter the dividend polynomial.");
+        Polynomial dividend = readPolynomial();
+        System.out.println("Enter the divisor polynomial.");
+        System.out.println("Note that the divisor polynomial should have the same variable/literal as the dividend polynomial.");
+        Polynomial divisor = readPolynomial();
+        System.out.println("Dividend polynomial : " + dividend.toString());
+        System.out.println("Divisor polynomial : " + divisor.toString());
+
+        if (dividend.getTerms().get(0).getLiteral() == divisor.getTerms().get(0).getLiteral()) {
+            Quotient result = dividend.divide(divisor);
+            System.out.println("Quotient : " + result.getQuotientP());
+            System.out.println("Remainder : " + result.getRemainderP());
+        } else {
+            System.out.println("The two polynomials cannot be divided because they have different literals.");
         }
         System.out.println("Press enter to continue.....");
         keyboard.nextLine();
